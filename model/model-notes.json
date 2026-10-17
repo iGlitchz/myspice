@@ -1,0 +1,33 @@
+{
+  "reference": "Newer supplied kitchen renders",
+  "finish": "Satin silver",
+  "revision": "03 | matched housing profiles and nonintersecting collector",
+  "estimated_dimensions_mm": [
+    660,
+    88,
+    435
+  ],
+  "reservoir_count": 14,
+  "default_state": "Holder flush and closed; no phone or paper",
+  "housing_join_clearance_mm": {
+    "collector": 0.6,
+    "lid": 0.6
+  },
+  "housing_outline_mm": {
+    "width": 660,
+    "depth": 86,
+    "plan_corner_radius": 11
+  },
+  "movable_nodes": [
+    "MS_Holder_Pivot",
+    "MS_Collector",
+    "MS_Lid",
+    "MS_Phone",
+    "MS_Paper"
+  ],
+  "provisional": [
+    "Dimensions and tube count estimated from images",
+    "Fold-down holder motion is a study, not verified mechanism",
+    "No dispensing internals modeled yet"
+  ]
+}
