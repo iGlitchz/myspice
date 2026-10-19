@@ -3,10 +3,9 @@
 This milestone contains a reference-based 3D appliance, a gradual-reveal hero, and
 a small companion app simulation. It intentionally stops before the full case study.
 
-The hero opens with a 21-second, five-chapter product film: a close pass along
-the right silver shoulder, the optional door opening and phone placement,
-the removable collector sliding forward, a longer descent along the silver
-edge to the base, and a full-product pullback.
+The hero opens with a 17-second, four-chapter product film: a downward pass along
+the right silver edge to the base, the optional door opening and phone placement,
+the removable collector sliding forward, and a full-product pullback.
 See `model/hero-storyboard.md` for the shot list and `src/heroChoreography.js`
 for the editable camera, lens, light, and collector keyframes.
 
@@ -26,7 +25,7 @@ Use **Inspect details** below the model to move closer to the reservoirs and fin
 The film offers pause, chapter selection, replay, and skip. It plays once, pauses
 outside the viewport or in a background tab, and bypasses motion entirely when
 the browser requests reduced motion. The door opens briefly for the phone in
-chapter 2 and closes again before the collector and silver-edge shots. Its pose
+chapter 2 and closes again before the collector and final reveal. Its pose
 and phone placement follow the same timeline as the camera when pausing/seeking.
 
 The phone demo begins with a three-step survey. Allergy selections filter the

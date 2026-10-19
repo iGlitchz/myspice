@@ -445,7 +445,7 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
     <div ref={host} className="canvas-host" />
     {status !== 'ready' && <img className="scene-poster" src={`/previews/${detail?'detail':mode}.png`} alt={detail?'Close-up of the MySpice reservoirs and spices':`Satin silver MySpice dispenser, ${mode === 'closed' ? 'with the phone holder closed' : `supporting a ${mode}`}`} />}
     {status === 'loading' && <span className="scene-loading">Setting the scene<span>…</span></span>}
-    <span className="sr-only">A satin silver wall-mounted spice dispenser with fourteen clear reservoirs and a removable collector. The film opens on the silver shoulder, demonstrates the door opening and a phone settling onto its support, slides the collector out and back, descends along the silver edge to the base, and reveals the complete product. Use the configuration buttons after the film to explore the optional phone or paper support.</span>
+    <span className="sr-only">A satin silver wall-mounted spice dispenser with fourteen clear reservoirs and a removable collector. The film opens with a downward pass along the silver edge to the base, demonstrates the door opening and a phone settling onto its support, slides the collector out and back, and reveals the complete product. Use the configuration buttons after the film to explore the optional phone or paper support.</span>
   </div>
   {status==='ready' && filmState.active && <div className="cinema-player" ref={timeline}>
     <div className="cinema-caption" key={filmState.chapter}>

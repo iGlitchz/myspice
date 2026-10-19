@@ -1,32 +1,29 @@
 // Camera coordinates are in metres: Y is up, +Z is the front of the appliance.
-// The collector is removable, so its reveal is a straight lift away from the
-// casing, without suggesting an unverified internal rail mechanism.
-export const FILM_DURATION = 21;
+// The collector slides forward beneath the casing without suggesting an
+// unverified internal rail mechanism.
+export const FILM_DURATION = 17;
 export const HERO_POSITION = [.50,.405,1.08];
 export const fullProductDistance = aspect => Math.min(1.45,Math.max(1,1.18/aspect));
 
 export const FILM_CHAPTERS = [
-  { time: 0, preview: 1.5, label: 'Satin silver', description: 'Light along the silver shoulder.' },
+  { time: 0, preview: 2.7, label: 'Satin silver', description: 'Follow the silver down to the base.' },
   { time: 3, preview: 6.5, label: 'Room for your recipe', description: 'An optional place for your phone.' },
   { time: 9, preview: 11.5, label: 'The removable collector', description: 'Slide free. Collect. Pour.' },
-  { time: 13, preview: 16.7, label: 'Considered edges', description: 'Follow the silver down to the base.' },
-  { time: 17, preview: 19.7, label: 'Meet MySpice', description: 'The complete form, revealed.' },
+  { time: 13, preview: 15.7, label: 'Meet MySpice', description: 'The complete form, revealed.' },
 ];
 
 // Deliberate holds alternate with travelling shots. Each frame carries its own
 // lens and light treatment; the final pose matches the interactive orbit view.
 const frames = [
-  { t: 0, p: [.434,.410,.192], at: [.312,.375,.024], fov: 32, exposure: .72, environment: .58, key: [-1.2,.8,1.4], light: 1.8 },
-  { t: 3, p: [.417,.355,.222], at: [.310,.324,.024], fov: 31, exposure: .94, environment: .8, key: [-.45,1.4,1.2], light: 1.6 },
+  { t: 0, p: [.430,.330,.240], at: [.311,.290,.024], fov: 32, exposure: .9, environment: .76, key: [-1.2,.8,1.4], light: 1.8 },
+  { t: 3, p: [.425,.080,.238], at: [.311,.030,.024], fov: 31, exposure: .94, environment: .8, key: [-.45,1.4,1.2], light: 1.6 },
   { t: 4.2, p: [.230,.180,.620], at: [.025,.105,.055], fov: 34, exposure: .94, environment: .8, key: [-.6,1.1,1.2], light: 1.6 },
   { t: 6.5, p: [.200,.190,.680], at: [0,.110,.050], fov: 34, exposure: .94, environment: .8, key: [-.6,1.1,1.2], light: 1.6 },
   { t: 9, p: [.128,.106,.306], at: [.018,.060,.038], fov: 34, exposure: .9, environment: .75, key: [-.8,.8,1.4], light: 1.6 },
   { t: 10.6, p: [.290,.215,.800], at: [.015,.045,.100], fov: 35, exposure: .94, environment: .8, key: [-.6,1.1,1.2], light: 1.6 },
   { t: 12, p: [.330,.250,.900], at: [0,.055,.110], fov: 35, exposure: .94, environment: .8, key: [-.6,1.1,1.2], light: 1.6 },
   { t: 13, p: [.330,.250,.900], at: [0,.055,.110], fov: 35, exposure: .94, environment: .8, key: [-.6,1.1,1.2], light: 1.6 },
-  { t: 14.1, p: [.430,.330,.240], at: [.311,.290,.024], fov: 32, exposure: .9, environment: .76, key: [-1.2,.8,1.4], light: 1.8 },
-  { t: 17, p: [.425,.080,.238], at: [.311,.030,.024], fov: 31, exposure: .94, environment: .8, key: [-.45,1.4,1.2], light: 1.6 },
-  { t: 21, p: HERO_POSITION, at: [0,.215,0], fov: 31, exposure: .94, environment: .8, key: [-.6,1.5,1.2], light: 1.6 },
+  { t: 17, p: HERO_POSITION, at: [0,.215,0], fov: 31, exposure: .94, environment: .8, key: [-.6,1.5,1.2], light: 1.6 },
 ];
 
 const smooth = t => t*t*t*(t*(t*6-15)+10);
@@ -56,8 +53,8 @@ export function sampleFilm(time, aspect, pose) {
 
   // Keep the final product in frame on a portrait stage without shrinking macros.
   const portrait=fullProductDistance(aspect);
-  const pullback=interval(time,17,FILM_DURATION);
-  const collectorShot=interval(time,9,10.6)*(1-interval(time,13,14.1));
+  const pullback=interval(time,13,FILM_DURATION);
+  const collectorShot=interval(time,9,10.6)*(1-pullback);
   const collectorDistance=Math.max(1,Math.min(1.55,1.35/aspect));
   pose.position.sub(pose.target).multiplyScalar(1+(collectorDistance-1)*collectorShot).add(pose.target);
   pose.position.sub(pose.target).multiplyScalar(mix(1,portrait,pullback)).add(pose.target);

@@ -1,4 +1,4 @@
-# MySpice hero film — 21 seconds
+# MySpice hero film — 17 seconds
 
 The holder opens briefly in chapter 2 to demonstrate the optional phone support.
 The phone leaves and the door closes before the remaining detail shots. The film
@@ -8,11 +8,10 @@ when the scene leaves the viewport.
 
 | Time | Shot | Motion and intent |
 | --- | --- | --- |
-| 0–3 s | Satin silver | Begin on the right silver shoulder and travel down the edge, with light revealing its profile. |
+| 0–3 s | Satin silver | Descend 260 mm along the right silver edge, from the reservoir opening to the silver-to-black collector join. |
 | 3–9 s | Room for your recipe | Descend to the door. It opens at 3.8–4.6 s, the phone enters at 4.6–6.1 s and holds, then lifts away at 7.2–8.4 s. The door closes at 8.4–9 s. |
 | 9–13 s | Removable collector | Ease back and slightly above the bottom channel. The collector slides forward 145 mm at a fixed height below the silver body, holds, then returns on the same path. Matching mating planes retain 0.6 mm clearance throughout. |
-| 13–17 s | Considered edges | Move to the right side, then descend 260 mm from the reservoir edge to centre the silver-to-black collector join. |
-| 17–21 s | Meet MySpice | Pull out from the lower detail to the complete appliance and settle in the interactive hero composition. |
+| 13–17 s | Meet MySpice | Pull back and rise from the collector view to the complete appliance, then settle in the interactive hero composition. |
 
 Camera, light, door, and phone keyframes live in `src/heroChoreography.js`. Pausing
 and selecting chapters freeze or seek all of them together. Reduced-motion
