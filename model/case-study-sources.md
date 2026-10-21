@@ -34,6 +34,12 @@ Iowa $15.50 / $4.27 / $11.23; Kansas $12.00 / $3.58 / $8.42.
 Current phone/paper support and satin silver direction
 come from the user's subsequent design instructions.
 
+Additional external nutrition research and delivery-fee documentation were added
+October 21, 2026. See `cost-health-research.md` for sources, the explicitly
+illustrative cost model and the distinction between observational health evidence
+and product outcomes. The main cost chart starts with the original state research;
+delivery charges are an explicitly modeled extension, not original findings.
+
 ## Visual research presentation
 
 The six research symbols summarize qualitative themes, not relative frequency or
@@ -77,6 +83,10 @@ resolution and resized to a maximum of 1600 pixels on either side where needed.
 
 The original 2024 interfaces and physical model are labeled as development work.
 The newer renders are labeled as the current visual direction/concept visualization.
+
+The later in-context editorial gallery is newly generated concept imagery, not
+photographs of real installations. See `gallery-notes.md` and the gallery prompt
+JSON files for the selected camera variations, source images and scale anchors.
 
 ## Editorial image revision, 2026-10-20
 

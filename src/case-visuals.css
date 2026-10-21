@@ -43,8 +43,8 @@
 .cost-bars>div>span:first-child{height:5px;display:block;min-width:1px;flex-shrink:0}
 .cost-bars .out-bar{background:#475342}.cost-bars .home-bar{background:var(--copper)}
 .cost-bars>div>span:last-child{font-size:8px;color:#75816a;margin-left:8px;white-space:nowrap}
-.cost-chart-row>strong{font-family:'Manrope',sans-serif;font-size:23px;letter-spacing:-.7px;font-weight:500;text-align:right}
-.cost-chart-row>strong>small{display:block;font-family:'DM Sans',sans-serif;font-size:5px;letter-spacing:1px;color:#89957c;margin-top:5px}
+.cost-chart-row>strong{font-family:var(--font-sans);font-size:23px;letter-spacing:-.7px;font-weight:500;text-align:right}
+.cost-chart-row>strong>small{display:block;font-family:var(--font-sans);font-size:5px;letter-spacing:1px;color:#89957c;margin-top:5px}
 .cost-table-wrap{min-height:326px;overflow-x:auto}
 .cost-table{width:100%;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums}
 .cost-table th,.cost-table td{padding:22px 9px;border-bottom:1px solid var(--case-rule);text-align:right;white-space:nowrap}
@@ -81,7 +81,7 @@
 .journey-stages strong{font-size:12px;font-weight:450;margin-top:8px;line-height:1.6}
 .journey-stages button:hover{color:#f4f2ea}
 .journey-detail{display:flex;gap:40px;padding:32px 0 34px;border-top:1px solid var(--case-rule);min-height:142px}
-.journey-detail-number{font-family:'Manrope',sans-serif;font-size:40px;line-height:1;letter-spacing:-2px;color:#7e8d70;min-width:40px}
+.journey-detail-number{font-family:var(--font-sans);font-size:40px;line-height:1;letter-spacing:-2px;color:#7e8d70;min-width:40px}
 .journey-detail dl{display:grid;grid-template-columns:1.3fr 1fr 1.25fr;gap:35px;margin:0;width:100%}
 .journey-detail dt{font-size:7px;letter-spacing:1.2px;color:#819073;margin-bottom:12px}
 .journey-detail dd{font-size:12px;line-height:1.7;margin:0;max-width:245px}

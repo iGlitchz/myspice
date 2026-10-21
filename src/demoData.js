@@ -9,19 +9,37 @@ export const RECIPES = [
   { id:'quick-chickpeas',title:'Lemony chickpea skillet',short:'Fifteen minutes, one pan.',time:15,calories:460,cost:2.5,plant:true,allergens:[],color:'#a3a558',spices:'Cumin · paprika · black pepper',tools:'Skillet, chopping board',ingredients:[ingredient('Chickpeas',400,'g',1.4),ingredient('Tomatoes',200,'g',0.95),ingredient('Spinach',100,'g',1),ingredient('Lemon',1,'',0.6),ingredient('Olive oil',1,'tbsp',0.2),ingredient('Cumin',1,'tsp',0.15),ingredient('Paprika',1,'tsp',0.15)],steps:['Drain and rinse the chickpeas. Chop the tomatoes.','Heat the oil in a skillet. Add chickpeas, tomatoes, and spices.','Cook until the tomatoes soften and the chickpeas are hot throughout.','Stir in spinach until wilted. Finish with lemon.'] },
 ];
 
-export const DEFAULT_PREFS = { allergies:[], allergyAnswered:false, diet:'Everything', goal:'Save time', minutes:30, cooks:3, people:2, budget:'Balanced' };
-export const ALLERGIES = ['None','Milk','Eggs','Wheat','Soy','Peanuts','Tree nuts','Sesame','Fish','Shellfish'];
+export const DEFAULT_PREFS = { avoid:[], avoidAnswered:false, preferences:[], goal:'Save time', minutes:30, cooks:3, people:2, budget:'Balanced' };
+export const AVOID_OPTIONS = ['None','Milk','Eggs','Wheat','Soy','Peanuts','Tree nuts','Sesame','Fish','Shellfish','Red meat','Chicken'];
+export const NUTRITION_PREFERENCES = ['High Protein','High Fiber','Low Fat','Low Carb'];
 export const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 
+// Soft ranking signals for the small illustrative collection, not dietary cutoffs.
+const preferenceScores = {
+  'lemon-chicken': {'High Protein':3,'High Fiber':1,'Low Fat':2,'Low Carb':1},
+  'chickpea-bowl': {'High Protein':1,'High Fiber':3,'Low Fat':2,'Low Carb':0},
+  'tomato-pasta': {'High Protein':0,'High Fiber':1,'Low Fat':1,'Low Carb':0},
+  'salmon-bowl': {'High Protein':3,'High Fiber':1,'Low Fat':0,'Low Carb':1},
+  'peanut-noodles': {'High Protein':1,'High Fiber':1,'Low Fat':0,'Low Carb':0},
+  'quick-chickpeas': {'High Protein':1,'High Fiber':3,'Low Fat':2,'Low Carb':2},
+};
+
+export function normalizePreferences(saved = DEFAULT_PREFS) {
+  return {...DEFAULT_PREFS,...saved,avoid:saved.avoid??saved.allergies??[],avoidAnswered:saved.avoidAnswered??saved.allergyAnswered??false,preferences:saved.preferences??[]};
+}
+
 export function eligibleRecipes(prefs, ratings = {}, recipes = RECIPES) {
+  const avoid=prefs.avoid??prefs.allergies??[];
+  const preferenceScore=recipe=>(prefs.preferences??[]).reduce((sum,preference)=>sum+(preferenceScores[recipe.id]?.[preference]??0),0);
   return recipes.filter(recipe =>
-    recipe.allergens.every(allergen => !prefs.allergies.includes(allergen)) &&
-    (prefs.diet !== 'Plant-based' || recipe.plant) &&
+    recipe.allergens.every(allergen => !avoid.includes(allergen)) &&
+    (!avoid.includes('Chicken') || !recipe.ingredients.some(item=>/\bchicken\b/i.test(item.name))) &&
+    (!avoid.includes('Red meat') || !recipe.ingredients.some(item=>/\b(beef|pork|lamb|veal|venison|bacon|ham|steak)\b/i.test(item.name))) &&
     (prefs.goal !== 'Eat more plants' || recipe.plant) &&
     recipe.time <= prefs.minutes &&
     (prefs.budget !== 'Keep it low' || recipe.cost <= 3.2) &&
     ratings[recipe.id] !== 'skip'
-  ).sort((a,b) => (ratings[b.id] === 'like' ? 1 : 0) - (ratings[a.id] === 'like' ? 1 : 0) || (prefs.goal === 'Spend less' ? a.cost-b.cost : prefs.goal === 'Save time' ? a.time-b.time : 0));
+  ).sort((a,b) => (ratings[b.id] === 'like' ? 1 : 0) - (ratings[a.id] === 'like' ? 1 : 0) || preferenceScore(b)-preferenceScore(a) || (prefs.goal === 'Spend less' ? a.cost-b.cost : prefs.goal === 'Save time' ? a.time-b.time : 0));
 }
 
 export function createPlan(prefs, ratings, recipes) {

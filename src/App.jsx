@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import PhoneDemo from './PhoneDemo.jsx';
 import CaseStudy from './CaseStudy.jsx';
+import Wordmark from './Wordmark.jsx';
 const ProductScene = lazy(() => import('./ProductScene.jsx'));
 
 function SpiceMark({ className = '' }) {
@@ -11,24 +12,27 @@ export default function App() {
   const [mode,setMode] = useState('closed');
   const [detail,setDetail] = useState(false);
   const [replay,setReplay] = useState(0);
-  const [dispensing,setDispensing] = useState(false);
+  const [dispensing,setDispensing] = useState(0);
+  const [recipePreview,setRecipePreview] = useState(0);
   const [toast,setToast] = useState('');
-  const timer = useRef();
+  const stage = useRef(null);
   const notifyTimer = useRef();
-  useEffect(() => () => { clearTimeout(timer.current); clearTimeout(notifyTimer.current); }, []);
+  useEffect(() => () => { clearTimeout(notifyTimer.current); }, []);
   const tryDispense = () => {
-    clearTimeout(timer.current);
     clearTimeout(notifyTimer.current);
-    setDispensing(true);
-    setToast('Sample spice blend ready in the collector.');
-    timer.current = setTimeout(() => setDispensing(false),2400);
-    notifyTimer.current = setTimeout(() => setToast(''),5000);
+    setMode('closed');
+    setDetail(false);
+    setDispensing(value=>value+1);
+    setToast('Watch your spice blend collect.');
+    stage.current?.focus({preventScroll:true});
+    stage.current?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});
+    notifyTimer.current = setTimeout(() => setToast(''),13000);
   };
 
   return <>
     <a href="#app-demo" className="skip-link">Skip to the app demo</a>
     <header className="site-nav">
-      <a href="#top" className="brand" aria-label="MySpice home"><SpiceMark/><span>myspice<span className="brand-period">.</span></span></a>
+      <a href="#top" className="brand" aria-label="MySpice home"><SpiceMark/><Wordmark titleCase/></a>
       <nav aria-label="Page"><a href="#the-object">The object</a><a href="#app-demo">The experience</a><a href="#the-process">The process</a></nav>
       <a className="nav-cta" href="#app-demo">Try MySpice <span aria-hidden="true">↗</span></a>
     </header>
@@ -37,11 +41,11 @@ export default function App() {
       <section className="hero" id="top" aria-labelledby="hero-title">
         <div className="hero-copy">
           <p className="eyebrow"><span className="tiny-dot"/> A little less effort.</p>
-          <h1 id="hero-title">Make room<br/>for <span>flavor.</span></h1>
-          <p className="hero-description">Your spices, beautifully in reach.<br/>Your cooking, a little more effortless.</p>
+          <h1 id="hero-title">Make room<br/>for <em>flavor.</em></h1>
+          <p className="hero-description">Your spices, beautifully in reach.<br/>Your cooking, a little more <em>effortless.</em></p>
           <a href="#the-object" className="text-link">Meet MySpice <span aria-hidden="true">↓</span></a>
         </div>
-        <div className="hero-stage" id="the-object">
+        <div className="hero-stage" id="the-object" ref={stage} tabIndex={-1} role="region" aria-label="3D MySpice product preview">
           <Suspense fallback={<div className="product-scene"><img className="scene-poster" src="/previews/closed.png" alt="Satin silver MySpice with the holder closed"/></div>}><ProductScene mode={mode} detail={detail} replay={replay} dispensing={dispensing}/></Suspense>
           <div className="stage-corner top-left"/><div className="stage-corner bottom-right"/>
           <div className="stage-topline"><span>MYSPICE / FORM STUDY 02</span><span>SATIN SILVER</span></div>
@@ -57,20 +61,21 @@ export default function App() {
       <section className="app-section" id="app-demo" aria-labelledby="app-title">
         <div className="app-story">
           <p className="eyebrow dark"><span className="tiny-dot"/> A little more you.</p>
-          <h2 id="app-title">Your week.<br/>Your taste.</h2>
+          <h2 id="app-title">Your week.<br/><em>Your taste.</em></h2>
           <p className="story-intro">A kitchen companion that starts by listening.</p>
-          <p>What you enjoy. What you avoid. How much time you have. MySpice brings it together into a week that works for you.</p>
+          <p>What you enjoy. What you avoid. How much time you have. MySpice brings it together into a week that <em>works for you.</em></p>
           <div className="experience-steps">
             <div><span>01</span><p>Tell us what matters.<small>A few questions to find your starting point.</small></p></div>
-            <div><span>02</span><p>Make the week yours.<small>Meals, leftovers, and one shared grocery list.</small></p></div>
+            <div><span>02</span><p>Make the week yours.<small>Meals, leftovers and one streamlined grocery list. Store pickup is the next planned connection.</small></p></div>
             <div><span>03</span><p>A little better each time.<small>Quick feedback helps refine what comes next.</small></p></div>
           </div>
           <p className="demo-caption"><span className="tiny-dot"/> Explore the small interactive preview <span aria-hidden="true">→</span></p>
+          <div className="dispense-invitation"><p>Open a recipe and click <em>Dispense</em> to watch a spice blend collect in the product above.</p><button onClick={()=>setRecipePreview(value=>value+1)}>Try a sample recipe <span aria-hidden="true">↗</span></button></div>
         </div>
-        <PhoneDemo onDispense={tryDispense}/>
+        <PhoneDemo onDispense={tryDispense} recipePreview={recipePreview}/>
       </section>
       <CaseStudy/>
-      <footer className="site-footer"><a href="#top" className="brand"><SpiceMark/><span>myspice.</span></a><p>An exploration in connected cooking.<br/><span>Industrial design by Carlos Ocasio Milanes</span></p><a href="#top">Back to the object ↑</a></footer>
+      <footer className="site-footer"><a href="#top" className="brand" aria-label="MySpice home"><SpiceMark/><Wordmark/></a><p>An exploration in connected cooking.<br/><span>Industrial design by Carlos Ocasio Milanes</span></p><a href="#top">Back to the object ↑</a></footer>
     </main>
     {toast && <div className="global-toast" role="status"><SpiceMark/>{toast}<small>Concept simulation</small></div>}
   </>;

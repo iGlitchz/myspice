@@ -1,0 +1,71 @@
+{
+  "references": [
+    "C:/Users/iCarl/Documents/ChatGPT/MySpice/public/case-study/editorial/silver-front-editorial.png",
+    "C:/Users/iCarl/Documents/ChatGPT/MySpice/public/case-study/editorial/silver-left-editorial.png",
+    "C:/Users/iCarl/Documents/ChatGPT/MySpice/public/case-study/editorial/silver-right-editorial.png"
+  ],
+  "jobs": [
+    {
+      "name": "stone-house-wide-v2",
+      "slot": "stone-house",
+      "prompt": "Use case: photorealistic-natural. Make ONE new editorial photograph of the same MySpice appliance, rephotographed from the camera position described below. The three input images are GEOMETRY AND MATERIAL REFERENCES ONLY, not a flat cutout to paste. Reconstruct the object in the scene's true perspective. Invariants: same wide satin-silver case, charcoal top lid and bottom collector strip, clear slender vertical spice tubes, tiny circular button and a closed recessed phone support with narrow silver lip. No phone or tablet. Appliance actual dimensions fixed across every photograph: WIDTH 660mm, HEIGHT 360mm, DEPTH 80mm. Never enlarge it to fill a backsplash or turn it into a cabinet. Scale anchors: standard base cabinet module 600mm wide; worktop 900mm above floor and 600mm deep; wall-cabinet underside 1500mm above floor; appliance bottom 1020mm and top 1380mm above floor where wall cabinetry is present. Thus MySpice is about 1.1 times ONE standard cabinet's width and 60% of a 600mm-high backsplash. Maintain correct object proportions even under perspective. Fine-grained real spices, subdued earthly color, small herb flakes; no giant peppercorns. Editorial analog-style architectural photography, tactile materials, subtle grain, neutral whites, no orange cast, oversaturation, CGI plastic, heavy HDR, halos or oversharpening. Fictional interiors, no text, signage, logos, ratings or watermarks. SHOT 01 / DISTANT ARCHITECTURAL ESTABLISHING VIEW. Landscape 16:9. Camera about FIVE METRES from the kitchen wall, 28mm architectural lens at 1.4m height, looking diagonally across an ENTIRE spacious luxury limestone and pale oak kitchen. Show the full large island in the foreground, stools at one end, a wall of tall oak cabinets and a wide bank of lower cupboards. Keep verticals straight and the room realistically proportioned. The product is a modest functional object mounted on the back prep wall above ONE 600mm cabinet, only 12–16% of the image width. It must remain recognizable but must NOT become the main close-up. The photograph should clearly read as a room-wide interior, not a product hero. Airy daylight, warm limestone, oat-toned oak, one restrained ceramic vessel. Beautiful calm editorial architecture."
+    },
+    {
+      "name": "chefs-counter-oblique-v2",
+      "slot": "chefs-counter",
+      "prompt": "Use case: photorealistic-natural. Make ONE new editorial photograph of the same MySpice appliance, rephotographed from the camera position described below. The three input images are GEOMETRY AND MATERIAL REFERENCES ONLY, not a flat cutout to paste. Reconstruct the object in the scene's true perspective. Invariants: same wide satin-silver case, charcoal top lid and bottom collector strip, clear slender vertical spice tubes, tiny circular button and a closed recessed phone support with narrow silver lip. No phone or tablet. Appliance actual dimensions fixed across every photograph: WIDTH 660mm, HEIGHT 360mm, DEPTH 80mm. Never enlarge it to fill a backsplash or turn it into a cabinet. Scale anchors: standard base cabinet module 600mm wide; worktop 900mm above floor and 600mm deep; wall-cabinet underside 1500mm above floor; appliance bottom 1020mm and top 1380mm above floor where wall cabinetry is present. Thus MySpice is about 1.1 times ONE standard cabinet's width and 60% of a 600mm-high backsplash. Maintain correct object proportions even under perspective. Fine-grained real spices, subdued earthly color, small herb flakes; no giant peppercorns. Editorial analog-style architectural photography, tactile materials, subtle grain, neutral whites, no orange cast, oversaturation, CGI plastic, heavy HDR, halos or oversharpening. Fictional interiors, no text, signage, logos, ratings or watermarks. SHOT 03 / LOW OPPOSITE-SIDE OBLIQUE. Horizontal 3:2. Place camera at 1.05m above floor, about 1.5m to the LEFT of the mounted product, and aim diagonally RIGHT along a refined restaurant's stainless preparation counter. The view must show the LEFT END of the appliance closest to camera, with its row of tubes strongly receding to the RIGHT. This is a new opposite perspective, NOT the common view that shows its right end. Show subtle underside detail of the black collector and the 80mm depth of the chassis. Keep the entire appliance visible, at believable 660mm scale next to a 600mm prep module, filling around 35–45% of the photo width due to camera proximity. A small white porcelain course plate and folded cloth sit on the counter; professional kitchen architecture recedes into the background. Neutral cool steel, soft warm pass lights, fine-dining precision. No people, no logo."
+    },
+    {
+      "name": "coastal-detail-macro-v2",
+      "slot": "coastal-kitchen",
+      "prompt": "Use case: photorealistic-natural. Make ONE new editorial photograph of the same MySpice appliance, rephotographed from the camera position described below. The three input images are GEOMETRY AND MATERIAL REFERENCES ONLY, not a flat cutout to paste. Reconstruct the object in the scene's true perspective. Invariants: same wide satin-silver case, charcoal top lid and bottom collector strip, clear slender vertical spice tubes, tiny circular button and a closed recessed phone support with narrow silver lip. No phone or tablet. Appliance actual dimensions fixed across every photograph: WIDTH 660mm, HEIGHT 360mm, DEPTH 80mm. Never enlarge it to fill a backsplash or turn it into a cabinet. Scale anchors: standard base cabinet module 600mm wide; worktop 900mm above floor and 600mm deep; wall-cabinet underside 1500mm above floor; appliance bottom 1020mm and top 1380mm above floor where wall cabinetry is present. Thus MySpice is about 1.1 times ONE standard cabinet's width and 60% of a 600mm-high backsplash. Maintain correct object proportions even under perspective. Fine-grained real spices, subdued earthly color, small herb flakes; no giant peppercorns. Editorial analog-style architectural photography, tactile materials, subtle grain, neutral whites, no orange cast, oversaturation, CGI plastic, heavy HDR, halos or oversharpening. Fictional interiors, no text, signage, logos, ratings or watermarks. SHOT 04 / TRUE MACRO MATERIAL DETAIL. Horizontal 3:2. This frame must NOT show the whole appliance. Use a 100mm macro lens close to the FRONT LEFT upper corner, framing ONLY about 15cm of the 66cm-wide product: the satin silver corner radius, fine dark lid seam, and the first THREE OR FOUR adjacent glass spice tubes. The rest of the product extends out of frame to the right and bottom. Show realistic very small grains behind the glass, tiny specks of salt and cracked pepper with credible micro scale, glass-wall thickness and soft natural specular reflections. Tubes about 28–30mm diameter; grains mostly 0.1–1mm, occasional herb pieces up to 2mm. Narrow strip of creamy coastal limestone in the background softly out of focus, raking side daylight. Restrained silvery whites and earthy spice color. Tangible editorial product-detail photograph, not a complete product pasted into a scene. Gentle depth of field, honest physical texture, no huge particles or excessive dramatic blur."
+    },
+    {
+      "name": "timber-high-angle-v2",
+      "slot": "timber-kitchen",
+      "prompt": "Use case: photorealistic-natural. Make ONE new editorial photograph of the same MySpice appliance, rephotographed from the camera position described below. The three input images are GEOMETRY AND MATERIAL REFERENCES ONLY, not a flat cutout to paste. Reconstruct the object in the scene's true perspective. Invariants: same wide satin-silver case, charcoal top lid and bottom collector strip, clear slender vertical spice tubes, tiny circular button and a closed recessed phone support with narrow silver lip. No phone or tablet. Appliance actual dimensions fixed across every photograph: WIDTH 660mm, HEIGHT 360mm, DEPTH 80mm. Never enlarge it to fill a backsplash or turn it into a cabinet. Scale anchors: standard base cabinet module 600mm wide; worktop 900mm above floor and 600mm deep; wall-cabinet underside 1500mm above floor; appliance bottom 1020mm and top 1380mm above floor where wall cabinetry is present. Thus MySpice is about 1.1 times ONE standard cabinet's width and 60% of a 600mm-high backsplash. Maintain correct object proportions even under perspective. Fine-grained real spices, subdued earthly color, small herb flakes; no giant peppercorns. Editorial analog-style architectural photography, tactile materials, subtle grain, neutral whites, no orange cast, oversaturation, CGI plastic, heavy HDR, halos or oversharpening. Fictional interiors, no text, signage, logos, ratings or watermarks. SHOT 05 / HIGH THREE-QUARTER VIEW. Portrait 4:5 photograph. Camera at approximately 1.9m above the floor, close to the product and looking DOWN at about 35 degrees from above and slightly to its left. Clearly reveal the flat charcoal TOP LID and the narrow 80mm depth of the satin-silver top shoulder, with the front tubes foreshortened naturally. Show most or all of the appliance from this high new viewpoint, alongside a visible portion of the 600mm-deep stone worktop BELOW. The object must remain 660mm wide versus the adjacent ONE 600mm cabinet width; do not enlarge it. Japanese-inspired luxury smoked-oak and charcoal-basalt kitchen with one dark ceramic bowl and softly grained timber. Neutral lateral daylight, a graceful reflection along the silver upper edge, thin controlled seams. This must look unmistakably photographed FROM ABOVE, not at standard standing eye-level. Keep the recipe support closed."
+    }
+  ],
+  "macroRefinement": {
+    "prompt": "Use case: precise-object-edit. Edit this macro MySpice photograph with ONE targeted change: replace ONLY the large peppercorn halves / seed-like granules inside the SECOND glass reservoir from the left with realistic FINELY GROUND BLACK PEPPER. The particles must be much smaller, 0.2–0.7 mm fine irregular charcoal-grey and brown flecks with very sparse pale specks, a settled natural powder, NOT whole or half peppercorns, coffee beans or beige round seeds. Preserve the photograph's exact framing, camera perspective, product geometry, glass tubes, satin-silver upper-left corner, black lid seam, limestone background, all lighting and depth of field. Leave all other reservoirs and surfaces unchanged. High-quality editorial macro photo, no text or watermark.",
+    "source": "coastal-detail-macro-v2"
+  },
+  "selected": [
+    {
+      "file": "stone-house",
+      "key": "stone-house-wide-v2",
+      "shot": "Room-wide architectural view",
+      "path": "C:\\Users\\iCarl\\.codex\\generated_images\\01a14586-2b00-7041-84f6-f92a76fbc080\\exec-2b18d9bd-415f-4452-892c-35c0b42f174c.png"
+    },
+    {
+      "file": "walnut-residence",
+      "key": "walnut-residence",
+      "shot": "Medium residential portrait",
+      "path": "C:\\Users\\iCarl\\.codex\\generated_images\\01a14586-2b00-7041-84f6-f92a76fbc080\\exec-9bde7ed4-d64a-491b-a75d-58a6ac685fd0.png"
+    },
+    {
+      "file": "chefs-counter",
+      "key": "chefs-counter-oblique-v2",
+      "shot": "Low opposite-side oblique",
+      "path": "C:\\Users\\iCarl\\.codex\\generated_images\\01a14586-2b00-7041-84f6-f92a76fbc080\\exec-556f13bf-750a-4937-a17f-9330f71c2955.png"
+    },
+    {
+      "file": "coastal-kitchen",
+      "key": "coastal-macro-final",
+      "shot": "Macro material detail",
+      "path": "C:\\Users\\iCarl\\.codex\\generated_images\\01a14586-2b00-7041-84f6-f92a76fbc080\\exec-471bea10-a134-4620-9a88-9d97c72d048d.png"
+    },
+    {
+      "file": "timber-kitchen",
+      "key": "timber-high-angle-v2",
+      "shot": "High three-quarter view",
+      "path": "C:\\Users\\iCarl\\.codex\\generated_images\\01a14586-2b00-7041-84f6-f92a76fbc080\\exec-a71fec65-2306-4779-b0a0-838bb37445da.png"
+    },
+    {
+      "file": "evening-service",
+      "key": "evening-service",
+      "shot": "Medium view during restaurant service",
+      "path": "C:\\Users\\iCarl\\.codex\\generated_images\\01a14586-2b00-7041-84f6-f92a76fbc080\\exec-195ba9df-f446-4668-97df-0422866c9236.png"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { RECIPES, DEFAULT_PREFS, ALLERGIES, DAYS, createPlan, eligibleRecipes, groceriesFor, quantity } from './demoData.js';
+import Wordmark from './Wordmark.jsx';
+import { RECIPES, DEFAULT_PREFS, AVOID_OPTIONS, NUTRITION_PREFERENCES, normalizePreferences, createPlan, eligibleRecipes, groceriesFor, quantity } from './demoData.js';
 
 function Icon({name,...props}) {
   const shapes = {
@@ -24,18 +25,18 @@ function Dish({ recipe, large=false }) {
 function readSaved() {
   try {
     const data = JSON.parse(localStorage.getItem('myspice-study-v1'));
-    if (!data || data.version !== 1) return null;
+    if (!data || ![1,2].includes(data.version)) return null;
     // Accept only the current fixture-backed plan. Older/invalid data starts fresh.
     if (data.plan && (!Array.isArray(data.plan) || data.plan.length !== 7 || data.plan.some(d=>!RECIPES.some(r=>r.id===d.dinner)||!RECIPES.some(r=>r.id===d.lunch)))) return null;
     return data;
   } catch { return null; }
 }
 
-export default function PhoneDemo({onDispense}) {
+export default function PhoneDemo({onDispense,recipePreview=0}) {
   const [saved] = useState(readSaved);
   const [tab,setTab] = useState('survey');
-  const [prefs,setPrefs] = useState(saved?.prefs||DEFAULT_PREFS);
-  const [draft,setDraft] = useState(saved?.prefs||DEFAULT_PREFS);
+  const [prefs,setPrefs] = useState(()=>normalizePreferences(saved?.prefs||DEFAULT_PREFS));
+  const [draft,setDraft] = useState(()=>normalizePreferences(saved?.prefs||DEFAULT_PREFS));
   const [plan,setPlan] = useState(saved?.plan||null);
   const [ratings,setRatings] = useState(saved?.ratings||{});
   const [tasteNotes,setTasteNotes] = useState(saved?.tasteNotes||{});
@@ -59,21 +60,29 @@ export default function PhoneDemo({onDispense}) {
   const [breakfastNote,setBreakfastNote] = useState('Seasonal fruit · keep it simple');
   const scroller = useRef(null);
   const timers = useRef([]);
+  const previewSeen=useRef(0);
   const groceryItems = useMemo(()=>[...groceriesFor(plan,prefs,recipes),...customItems].map(item=>({...item,name:itemEdits[item.key]||item.name})),[plan,prefs,recipes,customItems,itemEdits]);
   const estimate = groceryItems.filter(i=>!checked[i.key]).reduce((sum,i)=>sum+i.price,0);
   const available = useMemo(()=>eligibleRecipes(prefs,ratings,recipes),[prefs,ratings,recipes]);
   const selectedRecipe = recipes.find(r=>r.id===selected);
 
   useEffect(() => {
-    try { localStorage.setItem('myspice-study-v1',JSON.stringify({version:1,prefs,plan,ratings,tasteNotes,recipes,checked,customItems,itemEdits})); } catch { /* The preview also works without browser storage. */ }
+    try { localStorage.setItem('myspice-study-v1',JSON.stringify({version:2,prefs,plan,ratings,tasteNotes,recipes,checked,customItems,itemEdits})); } catch { /* The preview also works without browser storage. */ }
   },[prefs,plan,ratings,tasteNotes,recipes,checked,customItems,itemEdits]);
   useEffect(()=>{scroller.current?.scrollTo({top:0,behavior:'instant'});},[tab,selected,step,busy]);
   useEffect(()=>()=>timers.current.forEach(clearTimeout),[]);
+  useEffect(()=>{
+    if(recipePreview<=previewSeen.current) return;
+    previewSeen.current=recipePreview;
+    const recipe=eligibleRecipes(prefs,{},recipes)[0];
+    if(recipe){setTab('home');setSelected(recipe.id);setServings(prefs.people);setEditing(false);setMessage('');}
+  },[recipePreview,prefs,recipes]);
 
   const go = id => { setTab(id); setSelected(null); setEditing(false); setFollowUp(null); setMessage(''); };
   const openRecipe = id => { setSelected(id); setServings(prefs.people); setEditing(false); setMessage(''); };
   const setChoice = (key,value) => setDraft(p=>({...p,[key]:value}));
-  const allergy = value => setDraft(p=>({...p,allergyAnswered:true,allergies:value==='None'?[]:p.allergies.includes(value)?p.allergies.filter(v=>v!==value):[...p.allergies,value]}));
+  const avoid = value => setDraft(p=>({...p,avoidAnswered:true,avoid:value==='None'?[]:p.avoid.includes(value)?p.avoid.filter(v=>v!==value):[...p.avoid,value]}));
+  const preference = value => setDraft(p=>({...p,preferences:p.preferences.includes(value)?p.preferences.filter(item=>item!==value):[...p.preferences,value]}));
 
   const generate = () => {
     const next = createPlan(draft,ratings,recipes);
@@ -116,9 +125,10 @@ export default function PhoneDemo({onDispense}) {
     {step===0 && <>
       <h3>Good food.<br/>Made for <em>you.</em></h3>
       <p className="phone-lead">First, anything we should leave out?</p>
-      <fieldset className="allergy-field"><legend>Food allergies <span>Required</span></legend><div className="chip-grid">{ALLERGIES.map(value=><button type="button" key={value} className={`choice-chip ${(value==='None'?draft.allergyAnswered&&!draft.allergies.length:draft.allergies.includes(value))?'chosen':''}`} aria-pressed={value==='None'?draft.allergyAnswered&&!draft.allergies.length:draft.allergies.includes(value)} onClick={()=>allergy(value)}>{value}{(value==='None'?draft.allergyAnswered&&!draft.allergies.length:draft.allergies.includes(value))&&<Icon name="check"/>}</button>)}</div></fieldset>
-      <p className="field-help">Your choices filter the sample recipe collection.</p>
-      <Choice label="How do you like to eat?" values={['Everything','Plant-based']} value={draft.diet} onChange={v=>setChoice('diet',v)}/>
+      <fieldset className="allergy-field"><legend>Avoid <span>Choose any · or None</span></legend><div className="chip-grid">{AVOID_OPTIONS.map(value=><button type="button" key={value} className={`choice-chip ${(value==='None'?draft.avoidAnswered&&!draft.avoid.length:draft.avoid.includes(value))?'chosen':''}`} aria-pressed={value==='None'?draft.avoidAnswered&&!draft.avoid.length:draft.avoid.includes(value)} onClick={()=>avoid(value)}>{value}{(value==='None'?draft.avoidAnswered&&!draft.avoid.length:draft.avoid.includes(value))&&<Icon name="check"/>}</button>)}</div></fieldset>
+      <p className="field-help">Foods to leave out, including allergens.</p>
+      <fieldset className="choice-field"><legend>Preferences <span className="sr-only">Choose multiple</span></legend><div>{NUTRITION_PREFERENCES.map(value=><button type="button" key={value} className={draft.preferences.includes(value)?'chosen':''} aria-pressed={draft.preferences.includes(value)} onClick={()=>preference(value)}>{value}</button>)}</div></fieldset>
+      <p className="field-help">Choose any that fit. Preferences help rank the sample meals.</p>
     </>}
     {step===1 && <>
       <h3>What matters<br/><em>this week?</em></h3>
@@ -135,7 +145,7 @@ export default function PhoneDemo({onDispense}) {
       <div className="little-insight"><Icon name="spark"/><p>{draft.cooks===7?'Fresh dinners each day. Lunches use the previous dinner.':'We’ll plan larger batches and make room for leftovers.'}</p></div>
     </>}
     {error&&<p className="form-error" role="alert">{error}</p>}
-    <div className="survey-actions">{step>0&&<button className="outline-square" aria-label="Previous survey step" onClick={()=>{setStep(s=>s-1);setError('');}}><Icon name="back"/></button>}<button className="orange-button" disabled={step===0&&!draft.allergyAnswered} onClick={()=>step<2?setStep(s=>s+1):generate()}>{step===2?'Make my sample week':'Keep going'}<Icon name="arrow"/></button></div>
+    <div className="survey-actions">{step>0&&<button className="outline-square" aria-label="Previous survey step" onClick={()=>{setStep(s=>s-1);setError('');}}><Icon name="back"/></button>}<button className="orange-button" disabled={step===0&&!draft.avoidAnswered} onClick={()=>step<2?setStep(s=>s+1):generate()}>{step===2?'Make my sample week':'Keep going'}<Icon name="arrow"/></button></div>
     <p className="sample-note">Interactive concept · sample meal planning</p>
   </>;
 
@@ -146,7 +156,7 @@ export default function PhoneDemo({onDispense}) {
     <h3>A little more<br/><em>your taste.</em></h3>
     {!plan?<><p className="phone-lead">A few good questions. A week of possibilities.</p><Dish recipe={RECIPES[1]} large/><button className="orange-button" onClick={()=>go('survey')}>Find my starting point<Icon name="arrow"/></button></>:<>
       <p className="phone-lead">Your starting point is set. Let’s keep refining it.</p>
-      <div className="home-summary"><button onClick={()=>go('survey')}><Icon name="survey"/><span>Your preferences<small>{prefs.diet} · {prefs.minutes} min · {prefs.people} people</small></span><span>↗</span></button><button onClick={()=>go('plan')}><Icon name="plan"/><span>This week<small>{prefs.cooks} cooking days, with leftovers</small></span><span>↗</span></button><button onClick={()=>go('grocery')}><Icon name="grocery"/><span>Your grocery list<small>{groceryItems.filter(i=>!checked[i.key]).length} items · about ${Math.round(estimate)}</small></span><span>↗</span></button></div>
+      <div className="home-summary"><button onClick={()=>go('survey')}><Icon name="survey"/><span>Your preferences<small className="preference-summary">{prefs.preferences.length?prefs.preferences.join(' · '):'Your starting point'} · {prefs.minutes} min · {prefs.people} people</small></span><span>↗</span></button><button onClick={()=>go('plan')}><Icon name="plan"/><span>This week<small>{prefs.cooks} cooking days, with leftovers</small></span><span>↗</span></button><button onClick={()=>go('grocery')}><Icon name="grocery"/><span>Your grocery list<small>{groceryItems.filter(i=>!checked[i.key]).length} items · about ${Math.round(estimate)}</small></span><span>↗</span></button></div>
       <div className="small-heading"><h4>Curated for you</h4><span>SAMPLE PICKS</span></div>
       <p className="field-help">{Object.values(ratings).includes('like')?'Your liked meals move to the front.':'Try a meal, then tell us what worked.'}</p>
       {available.slice(0,3).map(recipe=><button className="recommendation" key={recipe.id} onClick={()=>openRecipe(recipe.id)}><Dish recipe={recipe}/><span><strong>{recipe.title}</strong><small>{recipe.time} min · {recipe.plant?'Plant-based':'Everyday cooking'}</small></span><span>↗</span></button>)}
@@ -172,7 +182,8 @@ export default function PhoneDemo({onDispense}) {
     <div className="list-toolbar"><span>{groceryItems.filter(i=>checked[i.key]).length} / {groceryItems.length} ready</span><button onClick={()=>setEditingList(v=>!v)}>{editingList?'Done editing':'Edit list'}</button><button onClick={copyGroceries}>{copyStatus||'Copy list ↗'}</button></div>
     <ol className="grocery-list">{groceryItems.map((item,index)=><li key={item.key} className={checked[item.key]?'is-checked':''}><span className="list-number">{String(index+1).padStart(2,'0')}</span><label><input type="checkbox" checked={!!checked[item.key]} onChange={()=>setChecked(p=>({...p,[item.key]:!p[item.key]}))}/><span className="custom-check"><Icon name="check"/></span><span className="sr-only">Already have </span>{!editingList&&<span className="grocery-name">{item.name}<small>{quantity(item.amount)} {item.unit}</small></span>}</label>{editingList&&<input className="grocery-edit" aria-label={`Edit ${item.name}`} value={item.name} onChange={e=>setItemEdits(p=>({...p,[item.key]:e.target.value}))}/>}</li>)}</ol>
     <form className="add-item" onSubmit={e=>{e.preventDefault();if(newItem.trim()){setCustomItems(p=>[...p,{key:`custom-${Date.now()}`,name:newItem.trim(),amount:1,unit:'',price:0}]);setNewItem('');}}}><input aria-label="Extra grocery item" placeholder="Anything else?" value={newItem} onChange={e=>setNewItem(e.target.value)}/><button aria-label="Add grocery item"><Icon name="plus"/></button></form>
-    <p className="sample-note">Check off what you already have. Custom items are excluded from the sample cost estimate.</p>
+    <div className="grocery-connection"><Icon name="grocery"/><div><strong>From your list to store pickup.</strong><p>A planned grocery connection would match this list to a store basket. Review the items, place the order and collect it when ready.</p><small>PLANNED CONNECTION · PREVIEW ONLY</small></div></div>
+    <p className="sample-note">Custom items are excluded from the sample cost estimate.</p>
   </>;
 
   const renderRecipe = () => <>
@@ -181,13 +192,13 @@ export default function PhoneDemo({onDispense}) {
     {editing?<input className="recipe-title-edit" aria-label="Recipe title" value={editDraft.title} onChange={e=>setEditDraft(p=>({...p,title:e.target.value}))}/>:<h3 className="recipe-title">{selectedRecipe.title}</h3>}
     <p className="phone-lead">{selectedRecipe.short}</p><div className="recipe-stats"><span><Icon name="clock"/>{selectedRecipe.time} min</span><span>{selectedRecipe.calories} kcal*</span><label><select aria-label="Recipe servings" value={servings} onChange={e=>setServings(Number(e.target.value))}>{[1,2,4,6,8].map(n=><option key={n} value={n}>{n} servings</option>)}</select></label></div>
     <p className="field-help">Tools: {selectedRecipe.tools}</p><div className="recipe-heading"><h4>Ingredients</h4><span>PER {servings} SERVINGS</span></div><ul className="ingredients">{(editing?editDraft.ingredients:selectedRecipe.ingredients).map((item,index)=><li key={item.name}><span>{item.name}</span>{editing?<label><span className="sr-only">Amount of {item.name} for 2 servings</span><input type="number" min="0" step="0.5" value={item.amount} onChange={e=>setEditDraft(p=>({...p,ingredients:p.ingredients.map((v,n)=>n===index?{...v,amount:e.target.value}:v)}))}/>{item.unit}<small>base / 2 servings</small></label>:<strong>{quantity(item.amount*servings/2)} {item.unit}</strong>}</li>)}</ul>
-    {!editing&&<button className="dispense-button" onClick={()=>{onDispense();setMessage('Dispensing simulated: '+selectedRecipe.spices+'.');}}><Icon name="spark"/><span>Dispense the spices<small>Concept simulation</small></span><span>↗</span></button>}
+    {!editing&&<><p className="dispense-callout"><Icon name="arrow"/>Click Dispense to watch your spices collect in the 3D preview.</p><button className="dispense-button" onClick={()=>{onDispense();setMessage('Dispensing preview: '+selectedRecipe.spices+'.');}}><Icon name="spark"/><span>Dispense</span><span aria-hidden="true">↗</span></button></>}
     <div className="recipe-heading"><h4>Let’s cook.</h4></div><ol className="recipe-steps">{(editing?editDraft.steps:selectedRecipe.steps).map((step,index)=><li key={index}><span>{String(index+1).padStart(2,'0')}</span>{editing?<textarea aria-label={`Recipe step ${index+1}`} value={step} onChange={e=>setEditDraft(p=>({...p,steps:p.steps.map((s,n)=>n===index?e.target.value:s)}))}/>:<p>{step}</p>}</li>)}</ol>
     {editing?<button className="orange-button" onClick={saveRecipe}>Save recipe<Icon name="check"/></button>:<div className="meal-feedback"><h4>Was this your kind of meal?</h4><p>A small answer helps shape your next week.</p><div><button className={ratings[selectedRecipe.id]==='like'?'chosen':''} aria-pressed={ratings[selectedRecipe.id]==='like'} onClick={()=>{setRatings(p=>({...p,[selectedRecipe.id]:'like'}));setFollowUp('why');}}>More like this +</button><button className={ratings[selectedRecipe.id]==='skip'?'chosen':''} aria-pressed={ratings[selectedRecipe.id]==='skip'} onClick={()=>{setRatings(p=>({...p,[selectedRecipe.id]:'skip'}));setFollowUp(null);setMessage('We’ll leave this meal out of future sample plans.');}}>Skip next time</button></div>{followUp==='why'&&<div className="follow-up"><p>What worked for you?</p>{['Quick prep','Big flavor','Good leftovers'].map(answer=><button key={answer} onClick={()=>{setFollowUp(answer);setTasteNotes(p=>({...p,[selectedRecipe.id]:answer}));setMessage(`${answer} saved with this meal.`);}}>{answer}</button>)}</div>}{followUp&&followUp!=='why'&&<p className="feedback-thanks">Noted: {followUp.toLowerCase()}. Your liked meal now leads your sample recommendations.</p>}</div>}
     <p className="sample-note">Sample recipe · estimated nutrition and cost. Servings here scale the recipe view; your weekly plan uses the household size in Survey.</p>
   </>;
 
-  return <div className="demo-column"><div className="phone-frame"><div className="phone-hardware"><span>9:41</span><span className="phone-island"/><span>▮▮▮ <span className="battery"/></span></div><div className="phone-app-header"><span>myspice<span>.</span></span><span className="app-avatar">YOU</span></div><div className="phone-content" ref={scroller}>
+  return <div className="demo-column"><div className="phone-frame"><div className="phone-hardware"><span>9:41</span><span className="phone-island"/><span>▮▮▮ <span className="battery"/></span></div><div className="phone-app-header"><Wordmark/><span className="app-avatar">YOU</span></div><div className="phone-content" ref={scroller}>
     {busy?renderLoading():selectedRecipe?renderRecipe():tab==='survey'?renderSurvey():tab==='home'?renderHome():tab==='plan'?renderPlan():renderGroceries()}
     {message&&<p className="app-message" role="status">{message}</p>}
   </div><nav className="phone-tabs" aria-label="MySpice app">{[['home','Home','home'],['survey','Survey','survey'],['plan','Meal Plan','plan'],['grocery','Grocery List','grocery']].map(([id,label,icon])=><button key={id} disabled={busy} aria-current={tab===id?'page':undefined} onClick={()=>go(id)}><Icon name={icon}/><span>{label}</span></button>)}</nav><div className="phone-home-indicator"/></div><div className="phone-demo-label"><span className="tiny-dot"/> LIVE CONCEPT PREVIEW <span>YOUR OWN PHONE. YOUR OWN PACE.</span></div></div>;

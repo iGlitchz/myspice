@@ -8,6 +8,7 @@ import { SSAARenderPass } from 'three/addons/postprocessing/SSAARenderPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { FILM_CHAPTERS, FILM_DURATION, HERO_POSITION, filmChapter, fullProductDistance, sampleFilm } from './heroChoreography.js';
 import { createPlacement } from './accessoryMotion.js';
+import { createCollectorBlend } from './collectorBlend.js';
 
 export default function ProductScene({ mode, detail, replay, dispensing }) {
   const host = useRef(null);
@@ -18,6 +19,7 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
   const [status, setStatus] = useState('loading');
   const [filmState, setFilmState] = useState({ active: false, paused: false, chapter: 0 });
   const [contextVersion, setContextVersion] = useState(0);
+  const [blendReady,setBlendReady]=useState(false);
   useEffect(() => { actions.current = { mode, detail, dispensing }; }, [mode, detail, dispensing]);
   useEffect(() => { replayRef.current = replay; }, [replay]);
 
@@ -32,16 +34,19 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
     }
     let disposed = false;
     let inView = true;
+    let viewRatio=0;
     let model;
     let frame;
     let replaySeen = replayRef.current;
     let detailSeen = actions.current.detail;
     let modeSeen = actions.current.mode;
+    let dispenseSeen=0;
     let transition = null;
-    let collector, holder, phone, paper;
+    let collector, holder, phone, paper, blend;
+    let blendComplete=false;
     let placements=[];
     const collectorHome = new THREE.Vector3();
-    const film = { active: false, paused: false, time: 0, chapter: -1 };
+    const film = { active: false, paused: false, time: 0, chapter: -1, dispensing:false, elapsed:0, entry:null };
     let dirty = true;
     let refinedFrame = false;
     let lastMotion = 0;
@@ -146,14 +151,6 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
     controls.touches.ONE = THREE.TOUCH.PAN;
     controls.touches.TWO = THREE.TOUCH.ROTATE;
 
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particlePositions = new Float32Array(65 * 3);
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-    const particleMaterial = new THREE.PointsMaterial({ color: '#d99949', size: 0.0018, transparent: true, opacity: 0.9 });
-    const particles = new THREE.Points(particlesGeometry, particleMaterial);
-    particles.visible = false;
-    scene.add(particles);
-
     const loseContext = (event) => { event.preventDefault(); setStatus('fallback'); };
     const restoreContext = () => { setStatus('loading'); setContextVersion(v => v + 1); };
     renderer.domElement.addEventListener('webglcontextlost', loseContext);
@@ -206,6 +203,7 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
       ['MS_Phone', 'MS_Paper'].forEach(name => { const obj = model.getObjectByName(name); if (obj) obj.visible = false; });
       collector = model.getObjectByName('MS_Collector');
       if (collector) collectorHome.copy(collector.position);
+      blend=createCollectorBlend(collector);
       holder = model.getObjectByName('MS_Holder_Pivot');
       phone = model.getObjectByName('MS_Phone');
       paper = model.getObjectByName('MS_Paper');
@@ -235,8 +233,9 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
     resize();
     const observer = new IntersectionObserver(entries => {
       const entry=entries[0];
+      viewRatio=entry.intersectionRatio;
       inView=entry.isIntersecting && entry.intersectionRatio>=.12;
-    }, { threshold: 0.12 });
+    }, { threshold: [0,.12,.65] });
     observer.observe(container);
     const endPosition = new THREE.Vector3();
     const endTarget = new THREE.Vector3(0, 0.215, 0);
@@ -253,7 +252,7 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
     };
     const publishFilm = () => {
       film.chapter=filmChapter(film.time);
-      setFilmState({ active: film.active, paused: film.paused, chapter: film.chapter });
+      setFilmState({ active: film.active, paused: film.paused, chapter: film.chapter, dispensing:film.dispensing });
     };
     const resetLighting = () => {
       renderer.toneMappingExposure=.94;
@@ -273,6 +272,7 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
     const beginTransition = (instant=false) => {
       film.active=false;
       film.paused=false;
+      film.dispensing=false;
       publishFilm();
       interactivePose();
       transition={
@@ -284,25 +284,47 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
       controls.enabled=false;
       dirty=true;
     };
-    const startFilm = () => {
+    const startFilm = (dispense=false) => {
       detailSeen=actions.current.detail;
       modeSeen=actions.current.mode;
-      film.time=0;
-      film.paused=false;
-      film.active=!reduceMotion.matches;
+      film.time=dispense?10.1:0;
+      film.dispensing=dispense;
+      film.elapsed=dispense&&reduceMotion.matches?4.7:0;
+      film.entry=dispense&&!reduceMotion.matches?{position:camera.position.clone(),target:controls.target.clone(),collector:collector?.position.clone()}:null;
+      film.paused=dispense&&reduceMotion.matches;
+      film.active=dispense||!reduceMotion.matches;
       transition=null;
       controls.enabled=false;
       if (collector) collector.position.copy(collectorHome);
       if (holder) holder.rotation.x=0;
       placements.forEach(placement=>placement.reset());
-      if (reduceMotion.matches) beginTransition(true);
+      blend?.setFill(dispense&&reduceMotion.matches?1:0);
+      blendComplete=dispense&&reduceMotion.matches;
+      setBlendReady(blendComplete);
+      if (reduceMotion.matches&&!dispense) beginTransition(true);
       else publishFilm();
       dirty=true;
     };
     transport.current={
       skip: () => beginTransition(),
       pause: () => { film.paused=!film.paused; publishFilm(); dirty=true; },
-      chapter: time => { film.time=time; publishFilm(); dirty=true; },
+      chapter: time => { film.dispensing=false; film.entry=null; film.time=time; publishFilm(); dirty=true; },
+      inspectBlend:()=>{
+        film.active=true;
+        film.paused=true;
+        film.dispensing=true;
+        film.elapsed=4.7;
+        film.time=11.6;
+        film.entry=null;
+        transition=null;
+        controls.enabled=false;
+        blend?.setFill(1);
+        const stage=container.closest('.hero-stage');
+        stage?.focus({preventScroll:true});
+        stage?.scrollIntoView({behavior:reduceMotion.matches?'instant':'smooth',block:'center'});
+        publishFilm();
+        dirty=true;
+      },
     };
     const motionChange = () => { if (reduceMotion.matches) beginTransition(true); };
     reduceMotion.addEventListener('change',motionChange);
@@ -322,18 +344,40 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
           modeSeen = actions.current.mode;
           beginTransition();
         }
+        if(actions.current.dispensing>dispenseSeen&&viewRatio>=.65){
+          if(film.active)beginTransition();
+          if(placements.every(placement=>placement.progress===0)&&(!holder||Math.abs(holder.rotation.x)<.02)){
+            dispenseSeen=actions.current.dispensing;
+            startFilm(true);
+          }
+        }
         if (film.active) {
-          if (!film.paused) film.time=Math.min(film.time+dt,FILM_DURATION);
+          if(film.dispensing){
+            if(!film.paused)film.elapsed+=dt;
+            film.time=Math.min(10.1+Math.max(0,film.elapsed-3.2),FILM_DURATION);
+            if(blend?.setFill((film.elapsed-.9)/2))dirty=true;
+            if(film.elapsed>=2.9&&!blendComplete){blendComplete=true;setBlendReady(true);}
+          }else if (!film.paused) film.time=Math.min(film.time+dt,FILM_DURATION);
           sampleFilm(film.time,camera.aspect,pose);
-          camera.position.copy(pose.position);
-          controls.target.copy(pose.target);
-          camera.lookAt(pose.target);
+          // A higher version of the collector shot reveals the blend below the
+          // front rim; ease back to the original composition for the final reveal.
+          if(film.dispensing)pose.position.y+=.4*(1-THREE.MathUtils.smootherstep(film.time,13,FILM_DURATION));
+          const arrival=film.entry?THREE.MathUtils.smootherstep(film.elapsed,0,.9):1;
+          if(film.entry){
+            camera.position.lerpVectors(film.entry.position,pose.position,arrival);
+            controls.target.lerpVectors(film.entry.target,pose.target,arrival);
+          }else{
+            camera.position.copy(pose.position);
+            controls.target.copy(pose.target);
+          }
+          camera.lookAt(controls.target);
           setLens(pose.fov);
           renderer.toneMappingExposure=pose.exposure;
           scene.environmentIntensity=pose.environment;
           key.position.copy(pose.key);
           key.intensity=pose.light;
           if (collector) collector.position.copy(collectorHome).add(pose.collector);
+          if(collector&&film.entry?.collector)collector.position.lerpVectors(film.entry.collector,pose.scratch.copy(collectorHome).add(pose.collector),arrival);
           if (holder && Math.abs(holder.rotation.x-pose.holder)>.000001) {
             holder.rotation.x=pose.holder;
             dirty=true;
@@ -396,17 +440,7 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
             }
           }
         }
-        if (particles.visible!==Boolean(actions.current.dispensing&&!reduceMotion.matches)) dirty=true;
-        particles.visible = actions.current.dispensing && !reduceMotion.matches;
-        if (particles.visible) {
-          for (let i = 0; i < 65; i++) {
-            particlePositions[i*3] = ((i % 3) - 1) * 0.0425 + Math.sin(i * 14) * 0.004;
-            particlePositions[i*3+1] = 0.139 - ((now/1000 * 0.14 + i * 0.007) % 0.115);
-            particlePositions[i*3+2] = 0.015 + Math.sin(i * 3) * 0.003;
-          }
-          particlesGeometry.attributes.position.needsUpdate = true;
-          dirty = true;
-        }
+        if(blend?.stream(film.elapsed,film.active&&film.dispensing&&film.elapsed>.9&&film.elapsed<2.9&&!reduceMotion.matches))dirty=true;
       }
       if (!film.active && !transition) controls.update();
       if (dirty) {
@@ -447,10 +481,11 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
     {status === 'loading' && <span className="scene-loading">Setting the scene<span>…</span></span>}
     <span className="sr-only">A satin silver wall-mounted spice dispenser with fourteen clear reservoirs and a removable collector. The film opens with a downward pass along the silver edge to the base, demonstrates the door opening and a phone settling onto its support, slides the collector out and back, and reveals the complete product. Use the configuration buttons after the film to explore the optional phone or paper support.</span>
   </div>
+  {status==='ready'&&blendReady&&!filmState.active&&<button className="blend-result-button" onClick={()=>transport.current?.inspectBlend()}>View collected blend <span aria-hidden="true">↗</span></button>}
   {status==='ready' && filmState.active && <div className="cinema-player" ref={timeline}>
     <div className="cinema-caption" key={filmState.chapter}>
       <span className="cinema-number">{String(filmState.chapter+1).padStart(2,'0')} / {String(FILM_CHAPTERS.length).padStart(2,'0')}</span>
-      <span>{FILM_CHAPTERS[filmState.chapter].label}<small>{FILM_CHAPTERS[filmState.chapter].description}</small></span>
+      <span>{filmState.dispensing&&filmState.chapter===2?'Your spice blend':FILM_CHAPTERS[filmState.chapter].label}<small>{filmState.dispensing&&filmState.chapter===2?'Watch it collect. Slide free. Pour.':FILM_CHAPTERS[filmState.chapter].description}</small></span>
     </div>
     <div className="cinema-transport">
       <button onClick={()=>transport.current?.pause()} aria-label={filmState.paused?'Play product film':'Pause product film'} title={filmState.paused?'Play':'Pause'}>{filmState.paused?<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m5 3 8 5-8 5Z" fill="currentColor"/></svg>:<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10M11 3v10" stroke="currentColor" strokeWidth="2"/></svg>}</button>
@@ -459,6 +494,7 @@ export default function ProductScene({ mode, detail, replay, dispensing }) {
     <div className="cinema-chapters" aria-label="Product film chapters">
       {FILM_CHAPTERS.map((chapter,index)=><button key={chapter.time} onClick={()=>transport.current?.chapter(chapter.preview)} aria-label={`Jump to ${chapter.label}`} aria-current={filmState.chapter===index?'step':undefined} title={chapter.label} className={index<filmState.chapter?'complete':''}><span/></button>)}
     </div>
+    {filmState.dispensing&&blendReady&&<button className="cinema-inspect" onClick={()=>transport.current?.inspectBlend()}>Inspect blend <span aria-hidden="true">↗</span></button>}
   </div>}
   </>;
 }

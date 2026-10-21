@@ -3,7 +3,7 @@
 .case-pad{padding:105px 7.5%}
 .case-kicker{display:flex;align-items:center;gap:12px;font-size:9px;letter-spacing:1.7px;font-weight:500;color:var(--case-muted);text-transform:uppercase}
 .case-kicker>span:last-child:not(.tiny-dot){margin-left:auto;font-size:8px;letter-spacing:1.2px}
-.case-study h2,.case-study h3,.case-study .research-question p,.opportunity-statement>p,.digital-takeaway>p{font-family:'Manrope',Arial,sans-serif;font-weight:500}
+.case-study h2,.case-study h3,.case-study .research-question p,.opportunity-statement>p,.digital-takeaway>p{font-family:var(--font-sans);font-weight:500}
 .case-study h2{font-size:clamp(46px,5.6vw,88px);line-height:1.12;letter-spacing:-4px;margin:0}
 .case-study h3{font-size:30px;letter-spacing:-1.1px;line-height:1.2;margin:0 0 20px}
 .case-study p{font-size:14px;line-height:1.85;color:var(--case-muted);margin:0 0 18px}

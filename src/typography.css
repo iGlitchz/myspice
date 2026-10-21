@@ -1,0 +1,76 @@
+@font-face{font-family:'Playfair Display';src:url('/fonts/PlayfairDisplay-Variable.ttf') format('truetype');font-style:normal;font-weight:400 900;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('/fonts/PlayfairDisplay-Italic-Variable.ttf') format('truetype');font-style:italic;font-weight:400 900;font-display:swap}
+:root{--font-sans:'Helvetica Neue',Helvetica,Arial,sans-serif;--font-accent:'Playfair Display',Georgia,serif;font-family:var(--font-sans)}
+body{font-family:var(--font-sans);font-size:17px}
+.wordmark{display:inline-flex;align-items:baseline;gap:0;white-space:nowrap;line-height:1.1;letter-spacing:-1px}
+.wordmark strong{font-family:var(--font-sans);font-weight:700;letter-spacing:-1.4px}
+.wordmark em{font-family:var(--font-accent);font-weight:500;font-style:italic;letter-spacing:-1.2px;color:inherit;font-size:1.08em}
+.wordmark .brand-period{font-family:var(--font-sans);font-weight:700;margin-left:1px}
+.brand{font-size:34px;gap:12px}
+.site-footer .brand{font-size:32px}
+.hero em,.app-story em,.case-study em,.phone-content em{font-family:var(--font-accent);font-style:italic;font-weight:400;letter-spacing:-.025em}
+.hero h1{letter-spacing:-.045em;font-weight:400}
+.hero h1 em{color:var(--orange)}
+.hero-description{font-size:18px;max-width:410px;color:#bdc3b6}
+.hero-description em,.app-story>p em,.case-study p em{font-size:1.08em;color:inherit}
+.eyebrow,.eyebrow.dark{font-size:12px;letter-spacing:1.6px}
+.stage-topline{font-size:10px;letter-spacing:1.2px}
+.scene-instruction{font-size:12px}
+.replay-button span{font-size:12px}
+.product-controls button{font-size:13px;min-height:42px}
+.cinema-caption{font-size:14px}.cinema-caption small{font-size:12px;line-height:1.5}.cinema-number{font-size:10px}.cinema-transport .cinema-skip{font-size:12px}.cinema-transport button{min-height:42px;min-width:38px}
+.hero-bottom{font-size:11px}.hero-bottom a,.text-link{font-size:15px}
+.app-section{grid-template-columns:minmax(0,1fr) 400px;gap:10%;padding-left:9%;padding-right:9%}
+.app-story{max-width:530px}
+.app-story h2{font-weight:400;letter-spacing:-.04em}
+.app-story>p:not(.eyebrow):not(.demo-caption){font-size:18px;line-height:1.7;color:#515b4a}
+.app-story>p.story-intro{font-size:22px!important}
+.experience-steps p{font-size:18px;line-height:1.5}.experience-steps small{font-size:15px;line-height:1.6}.experience-steps>div>span{font-size:12px}
+.demo-caption{font-size:13px;line-height:1.6}
+.phone-app-header>.wordmark{font-size:26px;font-family:var(--font-sans);color:var(--ink)}
+.phone-app-header>.wordmark em{color:var(--ink)}
+.phone-content{font-size:14px}.phone-content h3{font-weight:400;letter-spacing:-1.1px}
+.phone-eyebrow{font-size:10px;letter-spacing:1px}.phone-eyebrow>span{font-size:10px}
+.phone-lead,.field-help,.phone-content .sample-note,.phone-content .empty-state>p{font-size:13px;line-height:1.65}
+.allergy-field legend,.choice-field legend{font-size:14px}.choice-chip,.choice-field button{font-size:13px;min-height:42px}
+.orange-button{font-size:14px;min-height:46px}.phone-tabs span{font-size:11px}.phone-tabs button{min-height:48px}
+.meal-row strong,.recommendation strong{font-size:14px}.meal-row small,.recommendation small,.meal-row small:first-child{font-size:11px;line-height:1.5}
+.grocery-name,.ingredients li,.recipe-steps p{font-size:14px}.grocery-name small{font-size:11px}.recipe-stats>span,.recipe-stats select{font-size:12px}.recipe-stats{flex-wrap:wrap}.recipe-heading h4{font-size:17px}.recipe-heading>span{font-size:10px}
+.small-text-button,.back-button,.list-toolbar,.list-toolbar button{font-size:12px}.grocery-estimate>span{font-size:14px}.grocery-estimate small{font-size:11px}.phone-demo-label{font-size:10px;line-height:1.6}.phone-demo-label>span:last-child{font-size:9px}
+.meal-feedback h4{font-size:15px}.meal-feedback>p,.meal-feedback button,.feedback-thanks{font-size:12px}.dispense-button>span:nth-child(2){font-size:14px}.dispense-button small{font-size:11px}
+.case-study h2{font-weight:400;letter-spacing:-.045em}.case-study h2 em{color:inherit;letter-spacing:-.04em}
+.case-study h3{font-weight:400;letter-spacing:-.025em}
+.case-study p,.case-section-heading>p,.case-section-heading>div>p,.case-visuals .visual-heading>p{font-size:18px;line-height:1.7;max-width:42ch}
+.case-section-heading{grid-template-columns:1.25fr 1fr;gap:9%}
+.case-study .case-opening .case-lead{font-size:21px;line-height:1.65;max-width:400px}
+.case-study .case-opening-product figcaption{font-size:11px;letter-spacing:1px;line-height:1.6}
+.case-study .case-kicker{font-size:12px;letter-spacing:1.3px;line-height:1.6}.case-study .case-kicker>span:last-child:not(.tiny-dot){font-size:11px;letter-spacing:1px}
+.case-study .case-label,.method-strip>.case-label{font-size:11px;letter-spacing:1.2px;line-height:1.7}
+.case-source{font-size:13px;gap:10px;line-height:1.65}.case-text-link{font-size:15px;line-height:1.5}
+.case-project-meta dt{font-size:11px}.case-project-meta dd{font-size:15px}.case-contents a{font-size:15px}.case-contents a>span:first-child{font-size:11px}
+.case-study .finding-grid h3{font-size:25px}.case-study .finding-grid p{font-size:16px;max-width:28ch;line-height:1.65}.finding-art>span{font-size:11px}.finding-grid article{padding-bottom:30px}
+.visual-source-row>span{font-size:10px;letter-spacing:.8px}.visual-source-row{align-items:flex-start}
+.method-strip li{font-size:15px;line-height:1.5}.method-strip small{font-size:10px}.method-strip ol{gap:22px}
+.case-study .audience-grid h3{font-size:28px}.case-study .audience-grid p{font-size:17px;line-height:1.6;min-height:82px;max-width:26ch}.audience-traits{font-size:12px;line-height:1.5}.audience-art>span{font-size:11px}
+.case-study .case-user-journey h2{font-size:clamp(42px,4.5vw,70px);letter-spacing:-.045em}
+.journey-stages strong{font-size:15px;line-height:1.5}.journey-marker small{font-size:11px}.journey-stages button>.case-symbol{opacity:.9}.journey-detail dt{font-size:11px;line-height:1.5}.journey-detail dd{font-size:17px;line-height:1.6}.journey-detail{min-height:180px}.journey-loop{font-size:14px}.journey-loop .case-text-link{font-size:14px}
+.case-study .experiment-copy p,.case-study .hardware-heading p,.case-study .opportunity-decisions p,.case-study .making-subheading p,.case-study .physical-result p,.case-study .case-finale-heading>p{font-size:18px;line-height:1.7}
+.case-study .making-detail-row p{font-size:16px;line-height:1.6}.making-detail-row h3{font-size:23px}
+.process-photo figcaption,.first-interface figcaption,.case-study .original-interfaces>p,.concept-studies>figcaption{font-size:13px;line-height:1.6}.process-photo figcaption b,.first-interface figcaption>span:last-child,.original-interfaces>p>span,.concept-studies>figcaption>span:last-child{font-size:11px;line-height:1.5}
+.signal-flow li{font-size:15px;line-height:1.6}.signal-flow li>span{font-size:11px}.signal-flow li>b{top:35px}
+.case-book-link{font-size:16px}.case-book-link>span:first-child{font-size:11px;line-height:1.5}
+.site-footer p{font-size:15px}.site-footer p span,.site-footer>a:last-child{font-size:13px}
+@media(max-width:1100px){
+  .app-section{gap:7%;grid-template-columns:minmax(0,1fr) 365px}.case-section-heading{grid-template-columns:1.2fr 1fr;gap:8%}.case-study .finding-grid h3{font-size:23px}.case-study .audience-grid h3{font-size:25px}.method-strip ol{grid-template-columns:1fr 1fr;gap:25px}.method-strip li:nth-child(2) b{display:none}.journey-stages button{padding-left:10px;padding-right:10px}.journey-stages strong{font-size:13px}.journey-detail dl{gap:20px}.journey-detail dd{font-size:16px}.signal-flow ol{gap:15px}.signal-flow li{font-size:14px}
+}
+@media(max-width:760px){
+  .brand{font-size:30px}.site-footer .brand{font-size:29px}.site-nav .nav-cta{font-size:13px;gap:15px}.hero h1{font-size:clamp(56px,15vw,72px);letter-spacing:-.045em}.hero-description{font-size:17px;line-height:1.75;max-width:360px}.eyebrow,.eyebrow.dark{font-size:11px}.text-link,.hero-bottom a{font-size:14px}.hero-bottom>span:last-child{font-size:11px}.stage-topline{font-size:9px;gap:12px;letter-spacing:.6px}.scene-instruction{font-size:11px;letter-spacing:0}.replay-button span{font-size:11px}.product-controls button{font-size:12px;padding:9px 12px}
+  .cinema-player{left:8%;right:8%;gap:10px 6px}.cinema-caption{font-size:13px;gap:8px}.cinema-caption small{font-size:11px;letter-spacing:0}.cinema-number{font-size:9px;letter-spacing:.3px}.cinema-transport{gap:4px}.cinema-transport .cinema-skip{font-size:11px;gap:5px}.cinema-transport button{min-width:30px;min-height:44px}
+  .app-section{display:flex;padding-left:7%;padding-right:7%}.app-story>p:not(.eyebrow):not(.demo-caption){font-size:17px;max-width:42ch}.app-story>p.story-intro{font-size:20px!important}.app-story h2{font-size:58px;letter-spacing:-.045em}.experience-steps p{font-size:17px}.experience-steps small{font-size:14px}.demo-caption{font-size:12px}.phone-demo-label{font-size:9px;display:block}.phone-demo-label>span:last-child{font-size:9px;display:block;margin:4px 0 0}
+  .case-study h2{font-size:clamp(40px,10.7vw,64px);letter-spacing:-.04em}.case-study .case-user-journey h2{font-size:40px;letter-spacing:-.04em}.case-study .case-opening h2{font-size:43px;letter-spacing:-.04em}.case-study .case-finale-heading h2{font-size:42px;letter-spacing:-.04em}.case-study .case-opening .case-lead{font-size:19px}
+  .case-study p,.case-section-heading>p,.case-section-heading>div>p,.case-visuals .visual-heading>p{font-size:17px;line-height:1.7;max-width:42ch}.case-study .case-kicker{font-size:10px;letter-spacing:.8px;gap:8px;flex-wrap:wrap}.case-study .case-kicker>span:last-child:not(.tiny-dot){font-size:10px;letter-spacing:.6px}.case-study .case-label{font-size:11px;letter-spacing:.8px}.case-source,.visual-source-row .case-source{font-size:12px;line-height:1.6}.case-text-link{font-size:14px}.case-study .case-opening-product figcaption{font-size:10px;margin-top:0}.case-project-meta dt{font-size:10px}.case-project-meta dd{font-size:14px}.case-contents a{font-size:14px;gap:10px}.case-contents a>span:first-child{font-size:10px}
+  .case-study .finding-grid h3{font-size:20px;line-height:1.2}.case-study .finding-grid p{font-size:15px;line-height:1.6}.finding-art>span{font-size:10px}.finding-grid article{padding-right:14px}.finding-grid article:nth-child(even){padding-left:18px}.visual-source-row{flex-direction:column;gap:12px}.visual-source-row>span{font-size:10px;max-width:none}.method-strip li{font-size:14px;gap:9px}.method-strip small{font-size:10px}.method-strip ol{gap:25px 15px}.method-strip b{display:none}
+  .case-study .audience-grid h3{font-size:24px;line-height:1.2}.case-study .audience-grid p{font-size:16px;min-height:0;max-width:30ch}.audience-grid article{grid-template-columns:62px 1fr;gap:0 16px}.audience-art .case-symbol{width:62px;height:62px;margin-left:-6px}.audience-art>span{font-size:10px}.audience-traits{font-size:12px}
+  .journey-stages strong{font-size:13px;line-height:1.4;min-height:38px}.journey-marker small{font-size:10px}.journey-detail dt{font-size:11px}.journey-detail dd{font-size:16px;line-height:1.6}.journey-detail-number{font-size:32px}.journey-detail{min-height:320px}.journey-loop{font-size:13px}.journey-loop .case-text-link{font-size:14px}
+  .case-study .experiment-copy p,.case-study .hardware-heading p,.case-study .opportunity-decisions p,.case-study .making-subheading p,.case-study .physical-result p,.case-study .case-finale-heading>p{font-size:17px}.case-study .making-detail-row p{font-size:16px}.process-photo figcaption,.first-interface figcaption,.case-study .original-interfaces>p,.concept-studies>figcaption{font-size:12px}.process-photo figcaption b,.first-interface figcaption>span:last-child,.original-interfaces>p>span,.concept-studies>figcaption>span:last-child{font-size:10px;white-space:normal}.form-evolution .process-photo figcaption{font-size:11px}.signal-flow li{font-size:15px}.signal-flow li>span{font-size:11px}.case-book-link{font-size:15px}.case-book-link>span:first-child{font-size:10px}.case-ending{display:block}.site-footer p{font-size:13px}.site-footer p span,.site-footer>a:last-child{font-size:12px}
+}

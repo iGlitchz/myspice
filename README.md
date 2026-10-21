@@ -91,9 +91,25 @@ user journey, design directions, AI-assisted concept
 exploration, gesture and Arduino experiments, original interfaces, CAD, and physical
 model making. The closing image shows a single front view of the satin silver form.
 Custom SVG line symbols use restrained copper accents. The historical Midwest cost
-comparison switches between a paired bar chart and a semantic table; its figures
-come from p. 9 of the original process book. Journey stages reveal one short
-user/action/touchpoint summary at a time.
+table retains the figures from p. 9 of the original process book. The main cost
+section now compares home cooking, restaurant meals and an editable app-delivery
+extension, starting with those researched state costs (Illinois by default).
+Custom sliding dropdowns select the research location, meal count, day/week and
+comparison. Savings default to one meal a day; annual estimates use 365 days or
+52 weeks. The chart/table switch and shared-order fee allocation stay in sync.
+Official DoorDash and Uber Eats fee documentation is linked; the example is not
+a quoted platform price or average. A health section immediately follows, with
+CDC ingredient/sodium guidance and an observational NHANES comparison. Sources,
+data and calculation assumptions are in `model/cost-health-research.md`.
+Journey stages advance while in view, with a timed progress line, subtle selected
+icon glow and pause/manual controls. Detailed step/benefit descriptions replace
+the former touchpoint summary. Meal feedback is emphasized with three line symbols.
+The app's Avoid choices include red meat and chicken; nutrition preferences allow
+multiple selections. A recipe's Dispense button scrolls to the product and replays
+the collector sequence with fine spice grains and a persistent blend inside it.
+An inspection control holds the filled collector for a closer look. Grocery pickup
+is presented as a planned connection, with no live order submission. Implementation
+notes and possible grocery API sources are in `model/experience-refinements.md`.
 The case-study product images use a softer editorial treatment with finer spice
 textures. All four remade PNG views are saved in `public/case-study/editorial/`;
 the page uses optimized transparent WebP copies with a restrained color grade.
@@ -104,6 +120,21 @@ The narrative is derived from the supplied 42-page 2024 process book, available 
 documented in `model/case-study-sources.md`. Photographs and interface studies are
 optimized to WebP and lazy loaded. The PDF loads only when a reader opens its link.
 Scroll entrances respect reduced motion and the page remains readable without them.
+
+Typography pairs the Helvetica Neue/Helvetica/Arial system stack with self-hosted
+Playfair Display. The wordmark combines bold `MY` with italic `spice`; selective
+editorial emphasis uses Playfair. Body copy, captions, chart values and controls
+have larger, responsive type sizes. Playfair's license is in `public/fonts/`.
+Helvetica Neue itself is not bundled; an appropriately licensed webfont would be
+needed to make that exact face available on devices without a local installation.
+
+An editorial gallery appears immediately before the closing front view. Six new
+concept photographs mix distant architecture, a residential portrait, an opposite
+oblique, a macro material study, an overhead view and restaurant service. The
+responsive images open in a native full-screen dialog with keyboard navigation
+and original-PNG downloads. Images are in `public/case-study/gallery/`; final shot
+selection, consistent scale references and built-in imagegen prompts are recorded
+in `model/gallery-notes.md` and `model/gallery-variety-prompts.json`.
 
 ## Validation
 

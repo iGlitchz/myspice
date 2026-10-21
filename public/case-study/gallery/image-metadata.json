@@ -1,0 +1,38 @@
+[
+  {
+    "file": "stone-house",
+    "width": 1672,
+    "height": 941,
+    "webp_bytes": 237070
+  },
+  {
+    "file": "walnut-residence",
+    "width": 1122,
+    "height": 1402,
+    "webp_bytes": 258002
+  },
+  {
+    "file": "chefs-counter",
+    "width": 1536,
+    "height": 1024,
+    "webp_bytes": 192152
+  },
+  {
+    "file": "coastal-kitchen",
+    "width": 1536,
+    "height": 1024,
+    "webp_bytes": 165856
+  },
+  {
+    "file": "timber-kitchen",
+    "width": 1122,
+    "height": 1402,
+    "webp_bytes": 276402
+  },
+  {
+    "file": "evening-service",
+    "width": 1672,
+    "height": 941,
+    "webp_bytes": 246968
+  }
+]
