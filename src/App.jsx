@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import PhoneDemo from './PhoneDemo.jsx';
+import CaseStudy from './CaseStudy.jsx';
 const ProductScene = lazy(() => import('./ProductScene.jsx'));
 
 function SpiceMark({ className = '' }) {
@@ -28,7 +29,7 @@ export default function App() {
     <a href="#app-demo" className="skip-link">Skip to the app demo</a>
     <header className="site-nav">
       <a href="#top" className="brand" aria-label="MySpice home"><SpiceMark/><span>myspice<span className="brand-period">.</span></span></a>
-      <nav aria-label="Page"><a href="#the-object">The object</a><a href="#app-demo">The experience</a></nav>
+      <nav aria-label="Page"><a href="#the-object">The object</a><a href="#app-demo">The experience</a><a href="#the-process">The process</a></nav>
       <a className="nav-cta" href="#app-demo">Try MySpice <span aria-hidden="true">↗</span></a>
     </header>
 
@@ -65,10 +66,10 @@ export default function App() {
             <div><span>03</span><p>A little better each time.<small>Quick feedback helps refine what comes next.</small></p></div>
           </div>
           <p className="demo-caption"><span className="tiny-dot"/> Explore the small interactive preview <span aria-hidden="true">→</span></p>
-          <details className="study-notes"><summary>About this first study <span>+</span></summary><p>The appliance is modeled from your reference images. Dimensions and holder motion are provisional. The app uses sample recipes and local preferences; live AI planning and hardware communication come later.</p><a href="/assets/myspice.glb" download>Download the 3D model ↗</a></details>
         </div>
         <PhoneDemo onDispense={tryDispense}/>
       </section>
+      <CaseStudy/>
       <footer className="site-footer"><a href="#top" className="brand"><SpiceMark/><span>myspice.</span></a><p>An exploration in connected cooking.<br/><span>Industrial design by Carlos Ocasio Milanes</span></p><a href="#top">Back to the object ↑</a></footer>
     </main>
     {toast && <div className="global-toast" role="status"><SpiceMark/>{toast}<small>Concept simulation</small></div>}

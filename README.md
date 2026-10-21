@@ -1,7 +1,7 @@
-# MySpice — first model, hero, and companion app study
+# MySpice — product experience and design case study
 
-This milestone contains a reference-based 3D appliance, a gradual-reveal hero, and
-a small companion app simulation. It intentionally stops before the full case study.
+This experience contains a reference-based 3D appliance, a gradual-reveal hero,
+a small companion app simulation, and an illustrated design case study.
 
 The hero opens with a 17-second, four-chapter product film: a downward pass along
 the right silver edge to the base, the optional door opening and phone placement,
@@ -82,6 +82,28 @@ Satin silver, the newer kitchen references, a gradual reveal, optional phone/pap
 support, and a normally closed holder are confirmed direction. Physical dimensions,
 fourteen reservoirs, and the fold-down holder movement are visual estimates awaiting
 review. Internal dispensing geometry is not modeled in this milestone.
+
+## Design case study
+
+`src/CaseStudy.jsx`, `src/CaseStudyVisuals.jsx` and their styles extend the product
+and app preview with research findings, audience profiles, an interactive intended
+user journey, design directions, AI-assisted concept
+exploration, gesture and Arduino experiments, original interfaces, CAD, and physical
+model making. The closing image shows a single front view of the satin silver form.
+Custom SVG line symbols use restrained copper accents. The historical Midwest cost
+comparison switches between a paired bar chart and a semantic table; its figures
+come from p. 9 of the original process book. Journey stages reveal one short
+user/action/touchpoint summary at a time.
+The case-study product images use a softer editorial treatment with finer spice
+textures. All four remade PNG views are saved in `public/case-study/editorial/`;
+the page uses optimized transparent WebP copies with a restrained color grade.
+The built-in image generation prompt set is in `model/editorial-render-prompts.md`.
+
+The narrative is derived from the supplied 42-page 2024 process book, available at
+`public/case-study/MySpice-process-book.pdf`. Image sources and page references are
+documented in `model/case-study-sources.md`. Photographs and interface studies are
+optimized to WebP and lazy loaded. The PDF loads only when a reader opens its link.
+Scroll entrances respect reduced motion and the page remains readable without them.
 
 ## Validation
 

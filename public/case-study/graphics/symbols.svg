@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 320" fill="none" color="#29322b">
+  <defs>
+    <symbol id="counter" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 36h48M12 36v17h40V36M32 38v15"/><rect x="14" y="22" width="9" height="14" rx="1"/><path d="M14 19h9M29 16v20M26 16v7h6v-7"/><rect x="39" y="26" width="13" height="10" rx="1.5"/><path d="M37 26h17M43 22h5" stroke="#b67448"/>
+    </symbol>
+    <symbol id="clock" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="32" cy="32" r="20"/><path d="M32 19v13l9 6M32 12v3M12 32h3M32 49v3M49 32h3"/><path d="M32 8a24 24 0 0 1 24 24" stroke="#b67448"/>
+    </symbol>
+    <symbol id="touch" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 52l-7-18c-2-5 2-7 5-3l5 6V17a3 3 0 0 1 6 0v17-22a3 3 0 0 1 6 0v22-17a3 3 0 0 1 6 0v19-11a3 3 0 0 1 6 0v16c0 6-2 9-5 13M19 52h22"/><path d="M53 14c-3 4-5 6-5 8a5 5 0 0 0 10 0c0-2-2-4-5-8Z" stroke="#b67448"/>
+    </symbol>
+    <symbol id="recipe" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="18" y="8" width="28" height="48" rx="3"/><path d="M28 12h8M28 51h8M26 25h13M26 33h13M26 41h9"/><path d="m24 18 2 2 4-4" stroke="#b67448"/>
+    </symbol>
+    <symbol id="cleanup" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 34h48v19H8ZM37 34V17a7 7 0 0 1 14 0v5h-7M22 34v-3a9 9 0 0 1 18 0v3M15 40h34M14 45h36"/><path d="M45 27v3M49 27v3" stroke="#b67448"/>
+    </symbol>
+    <symbol id="storage" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="11" y="10" width="42" height="44" rx="1.5"/><path d="M11 31h42M18 19h7v12h-7ZM30 16h7v15h-7ZM42 21h6v10h-6ZM18 40h7v14h-7ZM30 39h7v15h-7ZM42 42h6v12h-6Z"/><path d="M17 16h9M29 13h9M41 18h8" stroke="#b67448"/>
+    </symbol>
+    <symbol id="budget" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 23v-6l35-6v12M10 23h43v29H10Z"/><path d="M53 32H42a6 6 0 0 0 0 12h11"/><circle cx="43" cy="38" r="1" stroke="#b67448"/><path d="M16 28h14" stroke="#b67448"/>
+    </symbol>
+    <symbol id="family" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="25" cy="20" r="7"/><circle cx="44" cy="28" r="5"/><path d="M10 53V43a15 15 0 0 1 30 0M34 53v-9a10 10 0 0 1 20 0v9M16 53h12"/><path d="M31 46h7" stroke="#b67448"/>
+    </symbol>
+    <symbol id="routine" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 25A21 21 0 0 1 50 17l4 6M54 15v8h-8M51 39A21 21 0 0 1 14 47l-4-6M10 49v-8h8"/><rect x="22" y="24" width="20" height="16" rx="2"/><path d="M22 29h20M32 29v11" stroke="#b67448"/>
+    </symbol>
+    <symbol id="preferences" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="16" y="8" width="32" height="48" rx="3"/><path d="M27 12h10M23 24h18M23 33h18M23 42h18"/><circle cx="29" cy="24" r="2.5" fill="#181b19"/><circle cx="36" cy="33" r="2.5" fill="#181b19" stroke="#b67448"/><circle cx="28" cy="42" r="2.5" fill="#181b19"/>
+    </symbol>
+    <symbol id="calendar" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="10" y="14" width="44" height="39" rx="2"/><path d="M10 24h44M21 9v10M43 9v10M19 32h5M30 32h5M41 32h5M19 43h5M30 43h5"/><path d="m40 42 3 3 5-6" stroke="#b67448"/>
+    </symbol>
+    <symbol id="grocery" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 23h34l4 31H11ZM23 23v-7a9 9 0 0 1 18 0v7M24 35h16M24 42h16"/><path d="m26 48 3 3 7-7" stroke="#b67448"/>
+    </symbol>
+    <symbol id="prep" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="26" width="46" height="27" rx="2"/><path d="M15 32v15M21 14l22 8-4 10-19-12Z"/><path d="m43 22 10 4-2 5-12-3" stroke="#b67448"/><path d="M27 43h17"/>
+    </symbol>
+    <symbol id="dispenser" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="8" y="12" width="48" height="39" rx="2"/><path d="M8 38h48M15 18v15M22 18v15M29 18v15M36 18v15M43 18v15M50 18v15M25 51v3h14v-3"/><path d="M25 44h14" stroke="#b67448"/>
+    </symbol>
+    <symbol id="feedback" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 24A21 21 0 1 1 11 38M13 14v10h10"/><circle cx="33" cy="32" r="11"/><path d="m27 32 4 4 8-9" stroke="#b67448"/>
+    </symbol>
+    <symbol id="interview" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 12h34v25H24l-9 8v-8h-5ZM44 23h10v24H42l-7 7v-7H25v-7"/><path d="M18 21h18M18 28h11" stroke="#b67448"/>
+    </symbol>
+    <symbol id="prototype" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m12 21 20-11 20 11v23L32 55 12 44ZM12 21l20 11 20-11M32 32v23M22 16l20 11v12"/><path d="m12 44 10-6" stroke="#b67448"/>
+    </symbol>
+  </defs>
+  <use href="#counter" width="64" height="64"/><use href="#clock" x="64" width="64" height="64"/><use href="#touch" x="128" width="64" height="64"/><use href="#recipe" x="192" width="64" height="64"/>
+  <use href="#cleanup" y="64" width="64" height="64"/><use href="#storage" x="64" y="64" width="64" height="64"/><use href="#budget" x="128" y="64" width="64" height="64"/><use href="#family" x="192" y="64" width="64" height="64"/>
+  <use href="#routine" y="128" width="64" height="64"/><use href="#preferences" x="64" y="128" width="64" height="64"/><use href="#calendar" x="128" y="128" width="64" height="64"/><use href="#grocery" x="192" y="128" width="64" height="64"/>
+  <use href="#prep" y="192" width="64" height="64"/><use href="#dispenser" x="64" y="192" width="64" height="64"/><use href="#feedback" x="128" y="192" width="64" height="64"/><use href="#interview" x="192" y="192" width="64" height="64"/>
+  <use href="#prototype" y="256" width="64" height="64"/>
+</svg>
